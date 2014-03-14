@@ -1,0 +1,38 @@
+body {
+  font: 10px sans-serif;
+}
+
+h1 small {
+  color: gray;
+}
+
+div#menu {
+  font-size: 16px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
+}
+div#chart {
+  border: 1px solid gray;
+  width: 960px;
+  height: 500px;
+  text-align: center;
+  
+}
+span#placeholder {
+  color: gray;
+}

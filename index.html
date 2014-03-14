@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+  <head>
+    <title>The Historian</title>
+    <link href="historian.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  <body>
+    <h1>The Historian <small>A web-based archive client.</small></h1>
+    <div id="menu">
+      PV: <input type="text" id="pv">
+       Start: <input type="text" id="startDate" placeholder="DD-MON-YYYY HH:MM:SS">
+       End: <input type="text" id="endDate" placeholder="DD-MON-YYYY HH:MM:SS">
+       <a href="#" id="go">Go</a>
+    </div>
+    <div id="chart">
+      <span id="placeholder"><h2>Enter a PV, start time, and end time, then press "Go".</h2></span>
+    </div>
+  </body>
+  <script src="d3/d3.min.js"></script>
+  <script src="historian.js"></script>
+</html>
