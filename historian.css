@@ -18,7 +18,7 @@ div#menu {
 }
 
 .x.axis path {
-  display: none;
+  /*display: none;*/
 }
 
 .line {
@@ -27,7 +27,7 @@ div#menu {
   stroke-width: 1px;
 }
 div#chart {
-  border: 1px solid gray;
+  /*border: 1px solid gray;*/
   width: 960px;
   height: 500px;
   text-align: center;
@@ -35,4 +35,14 @@ div#chart {
 }
 span#placeholder {
   color: gray;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: black;
 }

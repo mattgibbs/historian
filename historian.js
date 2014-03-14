@@ -18,6 +18,8 @@ var svg = d3.select("div#chart").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var bisectDate = d3.bisector(function(d) { return d.date; }).left;    
+
 d3.select("a#go").on("click", function() {
   d3.select("span#placeholder").style("display", null);
   d3.select("span#placeholder h2").text("Loading...");
@@ -74,6 +76,33 @@ function update(url) {
         .attr("dy", ".71em")
         .style("text-anchor", "end")
         .text(pv);
+        
+    var focus = svg.append("g")
+      .attr("class", "focus")
+      .style("display", "none");
+    
+    focus.append("circle")
+      .attr("r", 5);
+    
+    focus.append("text")
+      .attr("x", 9)
+      .attr("dy","0.35em");
+      
+    svg.append("rect")
+      .attr("class", "overlay")
+      .attr("width", width)
+      .attr("height", height)
+      .on("mouseover", function() { focus.style("display", null); })
+      .on("mouseout", function() { focus.style("display", "none"); })
+      .on("mousemove", function() {
+        var x0 = x.invert(d3.mouse(this)[0]);
+        var i = bisectDate(sparseData,x0,1);
+        var d0 = sparseData[i - 1];
+        var d1 = sparseData[i];
+        var d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+        focus.attr("transform", "translate(" + x(d.date) + "," + y(d.val) + ")");
+        focus.select("text").text(d.val);
+      });
   });
 }
 
