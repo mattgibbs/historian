@@ -25,25 +25,37 @@ d3.select("a#go").on("click", function() {
   var start = d3.select("input#startDate").property("value");
   var end = d3.select("input#endDate").property("value");
   update(generateUrl(pv, start, end));
-})
+});
 
 function update(url) {
   svg.selectAll("g").remove();
   svg.selectAll("path").remove();
   d3.json(url, function(error, data) {
     pv = data[0]["meta"]["name"];
-    data[0]["data"].forEach(function(d) {
+    
+    //If we have more than one data point per pixel, sparsify.
+    var sparseData = [];
+    if (data[0]["data"].length > 960) {
+      var increment = Math.floor(data[0]["data"].length/960)
+      for (var i=0; i<data[0]["data"].length; i = i + increment) {
+        sparseData.push(data[0]["data"][i]);
+      }
+    } else {
+      sparseData = data[0]["data"];
+    }
+      
+    sparseData.forEach(function(d) {
       var milliseconds = Math.round(d.secs*1000 + d.nanos*1e-6);
       d.date = new Date(milliseconds);
       d.val = +d.val;
     });
   
-    x.domain(d3.extent(data[0]["data"], function(d) { return d.date; }));
-    y.domain(d3.extent(data[0]["data"], function(d) { return d.val; }));
+    x.domain(d3.extent(sparseData, function(d) { return d.date; }));
+    y.domain(d3.extent(sparseData, function(d) { return d.val; }));
     
     d3.select("span#placeholder").style("display", "none");
     svg.append("path")
-      .datum(data[0]["data"])
+      .datum(sparseData)
       .attr("class", "line")
       .attr("d", line);
   
